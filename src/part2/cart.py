@@ -27,7 +27,7 @@ LINE_PRODUCT_ID_INDEX: Final = 0
 LINE_QUANTITY_INDEX: Final = 1
 
 
-def find_line(cart: list[CartLine], product_id: int):
+def find_line(cart: list[CartLine], product_id: int) -> int | None:
     for i, line in enumerate(cart):
         if line[LINE_PRODUCT_ID_INDEX] == product_id:
             return i
