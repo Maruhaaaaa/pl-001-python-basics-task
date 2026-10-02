@@ -26,11 +26,13 @@ type CartLine = tuple[int, int]
 LINE_PRODUCT_ID_INDEX: Final = 0
 LINE_QUANTITY_INDEX: Final = 1
 
+
 def find_line(cart: list[CartLine], product_id: int):
     for i, line in enumerate(cart):
         if line[LINE_PRODUCT_ID_INDEX] == product_id:
             return i
     return None
+
 
 def add_to_cart(
     storage: list[Product],
@@ -61,13 +63,19 @@ def add_to_cart(
     product = read_product(storage, product_id)
     if product is None:
         return None
-    
+
     left_product = product[QUANTITY_INDEX]
     if left_product < quantity:
-        print(f"not enough stock for product {product_id}: {left_product} available, {quantity} requested")
+        print(
+            f"not enough stock for product {product_id}: {left_product} available, {quantity} requested"
+        )
         return None
 
-    update_product(storage, product_id, (product[NAME_INDEX], product[PRICE_INDEX], left_product - quantity))
+    update_product(
+        storage,
+        product_id,
+        (product[NAME_INDEX], product[PRICE_INDEX], left_product - quantity),
+    )
 
     line_index = find_line(cart, product_id)
     if line_index is not None:
@@ -115,10 +123,12 @@ def remove_from_cart(
     if line_index is None:
         print(f"product {product_id} is not in the cart")
         return None
-    
+
     cart_quantity = cart[line_index][LINE_QUANTITY_INDEX]
     if cart_quantity < quantity:
-        print(f"cart holds only {cart_quantity} unit(s) of product {product_id}, cannot remove {quantity}")
+        print(
+            f"cart holds only {cart_quantity} unit(s) of product {product_id}, cannot remove {quantity}"
+        )
         return None
 
     product = read_product(storage, product_id)
@@ -126,7 +136,11 @@ def remove_from_cart(
         return None
 
     left_product = product[QUANTITY_INDEX]
-    update_product(storage, product_id, (product[NAME_INDEX], product[PRICE_INDEX], left_product + quantity))
+    update_product(
+        storage,
+        product_id,
+        (product[NAME_INDEX], product[PRICE_INDEX], left_product + quantity),
+    )
 
     new_quantity = cart[line_index][LINE_QUANTITY_INDEX] - quantity
     if new_quantity == 0:

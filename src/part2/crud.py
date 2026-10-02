@@ -34,7 +34,8 @@ def generate_product_id(storage: list[Product]) -> int:
         :data:`~src.part2.storage.PRODUCT_ID_MIN` when ``storage`` is
         empty.
     """
-    if not storage: return PRODUCT_ID_MIN
+    if not storage:
+        return PRODUCT_ID_MIN
     return max(product[PRODUCT_ID_INDEX] for product in storage) + 1
 
 
